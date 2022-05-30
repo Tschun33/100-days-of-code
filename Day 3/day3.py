@@ -24,24 +24,20 @@ print("Welcome to Treasure Island.")
 print("Your mission is to find the treasure.")
 choice1 = input('You\'re at a cross road. Where do you want to go? Type "left" or "right" \n')
 if choice1 == 'left':
-    print("You fell down and died. Game Over")
-else:
     choice2 = input('You\'ve come to a lake. There is an island in the middle of the lake. Type "wait" to wait for a '
                     'boat. Type "swim" to swim across.\n')
-    if choice2 == "wait":
-        print("An Alligator chased and killed you.Game Over")
-    else:
+    if choice2 == "swim":
         choice3 = input("You arrive at the Island unarmed. There is a house with three doors. One red, one yellow, one"
                         "blue. Which colour do you chose?.\n")
+        if choice3 == "yellow":
+            print("The treasure is open. You won!")
         if choice3 == "red":
             print("You enter a room full of fire. Game Over")
-        if choice3 == "yellow":
+        if choice3 == "blue":
             print("You enter a room full of beasts. Game Over")
-        else:
-            choice4 = input('You found the treasure but it woun\'t open. Use your "knife" or a "rock" to try opening '
-                            'the treasure\n')
-            if choice4 == "knife":
-                print("You slip and killed yourself. Game Over")
-            else:
-                print("The treasure is open. You won!")
+    else:
+        print("An Alligator chased and killed you.Game Over")
+else:
+    print("You fell down and died. Game Over")
+
 
