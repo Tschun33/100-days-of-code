@@ -1,27 +1,28 @@
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1: [ListNode], l2: [ListNode]) -> [ListNode]:
+        numl = []
+        numr = []
+
+        while l1:
+            numl.append(l1)
+            l1 = l1.next
+
+        num_left = numl[::-1]
 
 
-def isPalindrome(s: str) -> bool:
-    p = ""
-    for char in s:
-        if char.isalnum():
-            p += char.lower()
-        print(p)
-
-    left = 0
-    right = len(p)-1
-    while left <= right:
-        if p[left] != p[right]:
-            return False
-        print(left)
-        print(right)
-        left += 1
-        right -= 1
-
-    return True
 
 
-teststring = "Helloolleh"
 
-print(isPalindrome(teststring))
+sol = Solution()
+
+l1 = ListNode(1, None)
 
 
+
+sol.addTwoNumbers()
