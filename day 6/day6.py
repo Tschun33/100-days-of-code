@@ -28,7 +28,7 @@ while counter_wrong_guesses < 5:
             i += 1
         if guess_right == 0:
             counter_wrong_guesses +=1
-        if guesses_word == len(word)-1:
+        if "_" not in search:
             print("You Won")
     guess_right = 0
     lives = 5 - counter_wrong_guesses
