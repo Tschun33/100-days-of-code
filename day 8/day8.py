@@ -6,6 +6,8 @@ shift = int(input("Type the shift number:\n"))
 
 
 def encrypt(encrypt_text, num, choice):
+    while num >= 26:
+        num = num - 26
     if choice == "encode":
         new_text = ""
         i = 0
