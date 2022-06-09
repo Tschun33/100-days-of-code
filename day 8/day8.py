@@ -6,14 +6,14 @@ shift = int(input("Type the shift number:\n"))
 
 
 def encrypt(encrypt_text, num, choice):
-    while num >= 26:
-        num = num - 26
     if choice == "encode":
         new_text = ""
         i = 0
         while i < len(encrypt_text):
             index = alphabet.index(encrypt_text[i])
             new_index = index + num
+            while new_index >= 26:
+                new_index = new_index - 26
             new_text += alphabet[new_index]
             i += 1
         print(new_text)
@@ -23,6 +23,8 @@ def encrypt(encrypt_text, num, choice):
         while i < len(encrypt_text):
             index = alphabet.index(encrypt_text[i])
             new_index = index - num
+            while new_index >= 26:
+                new_index = new_index - 26
             new_text += alphabet[new_index]
             i += 1
         print(new_text)
