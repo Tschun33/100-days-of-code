@@ -15,6 +15,12 @@ dealer.append(random.choice(cards))
 print(f"Player's Hand: {player}")
 print(f"Dealer's Hand: {dealer}")
 
+if sum(player) == 21:
+    print("You Won")
+    is_playing = False
+    next_card = False
+    dealer_next_card = False
+
 while next_card:
     choice = input("Do you want one more card? 'yes' or 'no' ")
     if choice == "yes":
@@ -22,13 +28,41 @@ while next_card:
         print(f"Player's Hand: {player}")
         if sum(player) > 21:
             print("Your Lose")
+            dealer_next_card = False
             next_card = False
             is_playing = False
+        if sum(player) == 21:
+            print("You Won")
+            is_playing = False
+            next_card = False
+            dealer_next_card = False
     elif choice == "no":
-        next_card = False
+        if sum(player) < 17:
+            print("You have to pick a card")
+        else:
+            next_card = False
     else:
         print("No valid input")
 
 while dealer_next_card:
     dealer.append(random.choice(cards))
-    if sum(dealer)
+    dealer_next_card = False
+    print(f"Dealer Hand: {dealer}")
+    if sum(dealer) > 21:
+        print("You Win")
+        dealer_next_card = False
+    elif sum(dealer) < sum(player) and sum(dealer) < 17:
+        dealer_next_card = True
+    elif sum(dealer) == sum(player):
+        print("Draw")
+        print(f"Player Hand: {player}")
+        print(f"Dealer Hand: {dealer}")
+        dealer_next_card = False
+    elif sum(dealer) < sum(player):
+        dealer_next_card = True
+    elif sum(dealer) > sum(player):
+        print("You Lose")
+        print(f"Player Hand: {player}")
+        print(f"Dealer Hand: {dealer}")
+        dealer_next_card = False
+
