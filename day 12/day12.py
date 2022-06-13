@@ -1,42 +1,41 @@
 from random import randint
 
-print("Welcome to the number guessing game!")
-print("Im thinking of a number between 1 and 100.")
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard':")
-guesses = 0
 
-number = randint(1, 100)
+EASY_LEVEL = 10
+HARD_LEVEL = 5
 
 
-if difficulty == "easy":
-    guesses = 10
-elif difficulty == "hard":
-    guesses = 5
-else:
-    print("No valid input")
+def set_difficulty():
+    difficulty = input("Choose a difficulty. Type 'easy' or 'hard':")
+    if difficulty == "easy":
+        return EASY_LEVEL
+    else:
+        return HARD_LEVEL
 
 
-while guesses > 0:
-    print(f"You have {guesses} guesses remaining.")
-    guess = int(input("Make a guess:"))
-    if guess > number:
+def check_answer(guess, answer, guesses):
+    if guess > answer:
         print("Number is too high")
-        guesses -= 1
-    elif guess < number:
+        return guesses - 1
+    elif guess < answer:
         print("Number is too low")
-        guesses -= 1
-    elif guess == number:
-        guesses = 0
-        win = True
-
-if win:
-    print("You won!")
-else:
-    print("You lost!")
-
-print(f"My number was {number}")
+        return guesses - 1
+    else:
+        print(f"You got it! The number was {answer}")
 
 
+def game():
+    print("Welcome to the number guessing game!")
+    print("Im thinking of a number between 1 and 100.")
+    answer = randint(1, 100)
+    print(f"Psst number is {answer}")
+    guesses = set_difficulty()
+    guess = 0
+    while guess != answer and guesses > 0:
+        print(f"You have {guesses} guesses remaining.")
+        guess = int(input("Make a guess:"))
+        guesses = check_answer(guess, answer, guesses)
+    if guesses == 0:
+        print("You Lost")
 
-
-
+game()
