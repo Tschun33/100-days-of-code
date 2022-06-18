@@ -1,9 +1,9 @@
-for x in range(1, 101):
-    if x % 15 == 0:
-        print("FizzBuzz")
-    elif x % 5 == 0:
-        print("Buzz")
-    elif x % 3 == 0:
-        print("Fizz")
-    else:
-        print(x)
+my_list = [1, 3, 5, 7, 9]
+my_iterator = iter(my_list)
+
+print(my_iterator)
+next(my_iterator)
+print(next(my_iterator))
+print(next(my_iterator))
+next(my_iterator)
+print(next(my_iterator))
