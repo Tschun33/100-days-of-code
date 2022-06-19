@@ -21,8 +21,15 @@ def determine_answer(person_a, person_b, guess):
         return False
 
 
+def determine_choice(person_a, person_b, guess):
+    if guess == "A":
+        return person_a
+    else:
+        return person_b
+
+
 is_playing = True
-is_right = True
+is_right = False
 count_wins = 0
 
 
@@ -30,7 +37,8 @@ print("Welcome to my higher lower game")
 
 
 while is_playing:
-    choice_a = random.choice(ig_data.data)
+    if not is_right:
+        choice_a = random.choice(ig_data.data)
     print_choice(choice_a)
     choice_b = random.choice(ig_data.data)
     print_choice(choice_b)
@@ -38,8 +46,10 @@ while is_playing:
     det_answer = determine_answer(choice_a, choice_b, player_guess)
     if det_answer:
         os.system('cls')
+        is_right = True
         count_wins += 1
         print(f"Thats right! Your score is: {count_wins}")
+        choice_a = determine_choice(choice_a, choice_b, player_guess)
     else:
         os.system('cls')
         is_playing = False
