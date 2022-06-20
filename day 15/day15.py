@@ -45,16 +45,22 @@ def check_resources(beverage):
 
 
 def make_beverage(beverage):
-    Menu.resources["water"] -= beverage["water"]
-    Menu.resources["milk"] -= beverage["milk"]
-    Menu.resources["coffee"] -= beverage["coffee"]
+    new_water = Menu.resources["water"] - beverage["ingredients"]["water"]
+    new_milk = Menu.resources["milk"] - beverage["ingredients"]["milk"]
+    new_coffee = Menu.resources["coffee"] - beverage["ingredients"]["coffee"]
+    Menu.resources["water"] = new_water
+    Menu.resources["milk"] = new_milk
+    Menu.resources["coffee"] = new_coffee
 
 
 while machine_is_running:
     choice = input("Espresso Cappuccino or Latte ?")
     choice = choice.lower()
-    choice_customer = Menu.MENU[choice]
-    if check_resources(choice_customer):
+    if choice == "latte" or choice == "cappuccino" or choice == "espresso":
+        choice_customer = Menu.MENU[choice]
+    if choice == "report":
+        print_resources()
+    elif check_resources(choice_customer):
         penny_count = int(input("Pennies:"))
         nickel_count = int(input("Nickels:"))
         dime_count = int(input("Dimes:"))
@@ -65,8 +71,6 @@ while machine_is_running:
             balance += coin_sum
             make_beverage(choice_customer)
             return_change(coin_sum, choice_customer["cost"])
-    if choice == "report":
-        print_resources()
     if choice == "stop":
         machine_is_running = False
 
