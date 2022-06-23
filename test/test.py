@@ -21,3 +21,7 @@ print("End")
 logging.basicConfig(filename="mylog.log", filemode="w", level=logging.DEBUG)
 
 logging.debug("Debugging is the lowest level of severity")
+
+my_string = "Hello, World!"
+
+print(my_string[0:1])
