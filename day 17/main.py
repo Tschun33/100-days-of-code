@@ -4,6 +4,7 @@ from quiz_brain import QuizBrain
 
 question_bank = []
 is_right = True
+has_questions = True
 for question in question_data:
     q_text = question["text"]
     q_answer = question["answer"]
@@ -12,5 +13,6 @@ for question in question_data:
 
 quiz_brain = QuizBrain(question_bank)
 
-while is_right:
-    is_right = quiz_brain.next_question()
+while has_questions:
+    quiz_brain.next_question()
+    has_questions = quiz_brain.still_has_questions()
