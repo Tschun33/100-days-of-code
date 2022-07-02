@@ -2,17 +2,18 @@ import time
 from turtle import Turtle, Screen
 from player import Player
 from car import Car
+from scoreboard import Scoreboard
 
 
 screen = Screen()
 screen.setup(width=800, height=400)
 screen.tracer(0)
-
+scoreboard = Scoreboard()
 cars = []
 
 
 player = Player()
-for x in range(0, 50):
+for x in range(0, 40):
     new_car = Car()
     cars.append(new_car)
 
@@ -29,8 +30,21 @@ while game_playing:
     screen.update()
     for car in cars:
         car.move()
-        if car.xcor() < -390:
+        if car.xcor() < -290:
             car.reset_car()
+        if player.ycor() > 180:
+            player.reset()
+            for car in cars:
+                car.level_up()
+                car.reset_car()
+
+    for car in cars:
+        if car.distance(player) < 10:
+            print("collision")
+            scoreboard.game_over()
+            game_playing = False
+
+
 
 
 
