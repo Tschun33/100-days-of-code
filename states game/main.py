@@ -14,18 +14,13 @@ states = []
 
 data = pd.read_csv("50_states.csv")
 all_states = data.state.to_list()
-print(all_states)
 
 
 guessed_states = []
 
-# for state in data:
-#     new_state = State(name=data["state"], x=data["x"], y=data["y"])
-#     print(data["state"])
-#     states.append(new_state)
-
 while len(guessed_states) < len(all_states):
-    answer_state = screen.textinput(title="Guess a State", prompt="What is another States name?")
+    answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Guessed",
+                                    prompt="What is another States name?").title()
     print(answer_state)
 
     if answer_state in all_states:
@@ -35,5 +30,16 @@ while len(guessed_states) < len(all_states):
         state_data = data[data.state == answer_state]
         t.goto(int(state_data.x), int(state_data.y))
         t.write(answer_state)
+        guessed_states.append(answer_state)
+    if answer_state == "Exit":
+        break
 
-screen.exitonclick()
+states_to_learn = list(set(all_states) - set(guessed_states))
+new_data = pd.DataFrame(states_to_learn)
+new_data.to_csv("states_to_learn.csv")
+print(states_to_learn)
+
+
+
+
+
