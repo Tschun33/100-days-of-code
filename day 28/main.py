@@ -6,29 +6,48 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
-SHORT_BREAK_MIN = 1
-LONG_BREAK_MIN = 1
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 20
 reps = 0
+check_work = ""
+timer = None
 
-# ---------------------------- TIMER RESET ------------------------------- # 
+# ---------------------------- TIMER RESET ------------------------------- #
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+
+def reset_app():
+    global timer
+    window.after_cancel(timer)
+    global reps
+    reps = 0
+    timer = None
+    global timer_text
+    label_timer.config(text="Timer", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 40))
+    canvas.itemconfig(timer_text, text="00:00")
+    label_check.config(text="")
+
+# ---------------------------- TIMER MECHANISM ------------------------------- #
+
+
 def start_timer():
     global reps
+    global check_work
     reps += 1
     print(reps)
     if reps % 8 == 0:
         label_timer.config(text="Break", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 40))
-        count_down(LONG_BREAK_MIN*5)
+        count_down(LONG_BREAK_MIN*60)
     elif reps % 2 == 0:
-        count_down(SHORT_BREAK_MIN*5)
+        count_down(SHORT_BREAK_MIN*60)
         label_timer.config(text="Break", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 40))
     else:
         label_timer.config(text="Work", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 40))
-        count_down(WORK_MIN*5)
+        count_down(WORK_MIN*60)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
+
+
 def count_down(count):
     minutes = math.floor(count/60)
     seconds = count % 60
@@ -37,11 +56,19 @@ def count_down(count):
     clock = f"{minutes}:{seconds}"
     canvas.itemconfig(timer_text, text=clock)
     if count > 0:
-        window.after(1000, count_down, count - 1)
-    if count == 0 and reps < 8:
+        global timer
+        timer = window.after(1000, count_down, count - 1)
+    else:
         start_timer()
+        mark = ""
+        work_sessions = math.floor(reps/2)
+        for _ in range(work_sessions):
+            mark += "✔"
+        label_check.config(text=mark)
 
 # ---------------------------- UI SETUP ------------------------------- #
+
+
 window = Tk()
 window.title("Pomodoro App")
 window.config(padx=100, pady=50, bg=YELLOW)
@@ -57,14 +84,13 @@ label_timer.config(text="Timer", fg=GREEN, bg=YELLOW,  font=(FONT_NAME, 40))
 label_timer.grid(column=2, row=1)
 
 label_check = Label()
-label_check.config(text="✔", fg=GREEN, bg=YELLOW,  font=(FONT_NAME, 10))
+label_check.config(text="", fg=GREEN, bg=YELLOW,  font=(FONT_NAME, 10))
 label_check.grid(column=2, row=3)
 
 btn_start = Button(text="Start", command=start_timer)
 btn_start.grid(column=1, row=3)
 
-btn_reset = Button(text="Reset")
+btn_reset = Button(text="Reset", command=reset_app)
 btn_reset.grid(column=3, row=3)
 
 window.mainloop()
-
