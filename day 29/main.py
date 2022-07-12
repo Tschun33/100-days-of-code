@@ -2,7 +2,10 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+
 def generate_password():
 
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -10,10 +13,6 @@ def generate_password():
                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
-
-    nr_letters= random.randint(8, 10)
-    nr_symbols = random.randint(2, 4)
-    nr_numbers = random.randint(2, 4)
 
     password_letter = [random.choice(letters) for _ in range(random.randint(8, 10))]
     password_numbers = [random.choice(numbers) for _ in range(random.randint(2, 4))]
@@ -34,6 +33,21 @@ def generate_password():
     password = ''.join(new_password)
     input_password.insert(0, password)
     pyperclip.copy(password)
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+
+
+def search_login():
+    website = input_website.get()
+    with open("data.json", "r") as data_file:
+        data_logins = json.load(data_file)
+        try:
+            website_to_display = data_logins[website]
+            email = website_to_display["email"]
+            password = website_to_display["password"]
+        except KeyError:
+            messagebox.showinfo(title="No Entry Found", message="No Entry Found")
+        else:
+            messagebox.showinfo(title="Field Empty", message=f"Email: {email}\n Password: {password}")
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
@@ -43,18 +57,30 @@ def save_data():
     website = input_website.get()
     username = input_username.get()
     password = input_password.get()
+    new_data = {
+        website: {
+            "email": username,
+            "password": password
+        }
+    }
     print(website)
     if website == "" or password == "":
         messagebox.showinfo(title="Field Empty", message="At least one field is empty")
     else:
         if messagebox.askokcancel(title=website, message=f"Email: {username}\n Password: {password}\n Is it ok to save?"):
-            data_to_save = f" {website} | {username} | {password} \n"
-            password_file = open("password.txt", "a")
-            password_file.write(data_to_save)
-            password_file.close()
-            input_website.delete(0, END)
-            input_password.delete(0, END)
-
+            with open("data.json", "r") as password_file:
+                # read old data as data
+                try:
+                    data = json.load(password_file)
+                    # update (append) the new data to the existing data
+                    data.update(new_data)
+                except:
+                    data = new_data
+            with open("data.json", "w") as password_file:
+                # save the whole data (new and old)
+                json.dump(data, password_file, indent=4)
+                input_website.delete(0, END)
+                input_password.delete(0, END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -81,7 +107,6 @@ label_password.config(text="Password:")
 label_password.grid(column=0, row=3)
 
 # Entry
-
 input_website = Entry(width=35)
 input_website.grid(column=1, row=1, columnspan=2)
 input_website.focus()
@@ -100,5 +125,7 @@ btn_add.grid(column=1, row=4, columnspan=2)
 btn_generate = Button(text="Generate Password", command=generate_password)
 btn_generate.grid(column=2, row=3)
 
+btn_search = Button(text="Search", command=search_login)
+btn_search.grid(column=2, row=1)
 
 window.mainloop()

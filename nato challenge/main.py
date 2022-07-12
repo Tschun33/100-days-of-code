@@ -31,10 +31,17 @@ print(dict_alpha)
 
 # TODO 2. Create a list of the phonetic code words from a word that the user inputs.
 
-user_word = input("Your name?")
 
-user_characters = list(user_word.upper())
+def generate_nato():
+    user_word = input("Your name?")
+    user_characters = list(user_word.upper())
+    try:
+        nato_list = [dict_alpha[name] for name in user_characters]
+    except KeyError:
+        print("Sorry, only letters in the alphabet please")
+        generate_nato()
+    else:
+        print(nato_list)
 
-nato_list = [dict_alpha[name] for name in user_characters]
 
-print(nato_list)
+generate_nato()
