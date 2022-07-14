@@ -1,6 +1,7 @@
 from tkinter import *
-THEME_COLOR = "#375362"
 from quiz_brain import QuizBrain
+THEME_COLOR = "#375362"
+
 
 class QuizInterface:
     def __init__(self, quiz_brain: QuizBrain):
@@ -52,15 +53,13 @@ class QuizInterface:
     def true_pressed(self):
         self.give_feedback(self.quiz.check_answer("True"))
 
-
     def false_pressed(self):
         self.give_feedback(self.quiz.check_answer("False"))
-
 
     def give_feedback(self, is_right: bool):
         if is_right:
             self.canvas.config(bg="green")
-            self.score +=1
+            self.score += 1
             self.score_board.config(text=f"Score: {self.score}")
 
         else:
@@ -70,7 +69,3 @@ class QuizInterface:
     def clear_screen(self):
         self.canvas.config(bg="white")
         self.get_next_question()
-
-
-
-

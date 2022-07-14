@@ -1,6 +1,5 @@
 from ui import QuizInterface
 from question_model import Question
-import html
 from quiz_brain import QuizBrain
 import requests
 
@@ -28,9 +27,3 @@ quiz = QuizBrain(question_bank)
 ui = QuizInterface(quiz)
 # while quiz.still_has_questions():
 #     quiz.next_question()
-
-print("You've completed the quiz")
-print(f"Your final score was: {quiz.score}/{quiz.question_number}")
-
-
-
