@@ -1,0 +1,3 @@
+#!C:\Users\Stefan\Desktop\100 days of code\venv\Scripts\python.exe
+from now.main import main
+main()
