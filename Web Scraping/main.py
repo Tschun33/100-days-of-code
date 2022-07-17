@@ -31,23 +31,6 @@ print(max_upvotes)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
 # with open("website.html") as file:
 #     content = file.read()
 #
