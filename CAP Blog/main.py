@@ -28,7 +28,7 @@ def home():
     return render_template("index.html", posts=all_posts)
 
 
-@app.route("/get_posts/<id>")
+@app.route("/get_post/<id>")
 def get_post(id):
     all_posts = [
         {
@@ -52,16 +52,16 @@ def get_post(id):
     ]
     user_post = {}
     for post in all_posts:
-        if post["id"] == id:
+        if post["id"] == int(id):
             text = post["body"]
             title = post["title"]
             subtitle = post["subtitle"]
             user_post = {
-                "text": text,
+                "body": text,
                 "title": title,
                 "subtitle": subtitle,
             }
-    render_template("post.html", post=user_post)
+    return render_template("post.html", post=user_post)
 
 if __name__ == "__main__":
     app.run(debug=True)
