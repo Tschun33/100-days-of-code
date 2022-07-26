@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import requests as requests
 
@@ -10,3 +11,7 @@ r = requests.get("https://api.genderize.io", params=parameters)
 r.raise_for_status()
 r = r.json()["gender"]
 print(r)
+
+
+t_list = ["Hello", "World"]
+print(random.choice(t_list))
