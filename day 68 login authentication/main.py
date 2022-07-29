@@ -54,7 +54,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             print(check_password_hash(hashed_password, password))
-            return redirect(url_for("secrets"))
+            return redirect(url_for("login"))
     return render_template("register.html")
 
 
@@ -86,8 +86,10 @@ def secrets():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for("home"))
 
 
 @app.route('/download')
